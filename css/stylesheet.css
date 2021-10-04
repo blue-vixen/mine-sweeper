@@ -1,4 +1,10 @@
-body {background-color: black; color:white}
+body {background-color: black; 
+    color:white; 
+    text-align: center;
+    margin:auto;
+    display:flex;
+    flex-direction: column;
+}
 
 footer {
     position: absolute;
@@ -31,4 +37,12 @@ button {
     width: 200px;
     display: flex;
     justify-content: space-evenly;
+}
+
+.difficulty-setting {
+    padding: 10px;
+}
+
+.game-interface {
+    margin: auto;
 }

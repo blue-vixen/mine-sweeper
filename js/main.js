@@ -127,19 +127,19 @@ function setMinesNegsCount(cellI, cellJ, mat) {
 }
 
 function cellClicked(elCell, cellI, cellJ) {
-    if (gBoard[cellI][cellJ].isMarked || !gGame.isOn || gBoard[cellI][cellJ].isShown) return;
+    if (!gGame.isOn || gBoard[cellI][cellJ].isMarked || gBoard[cellI][cellJ].isShown) return;
     if (gBoard[cellI][cellJ].isMine) {
         mineClicked(elCell, cellI, cellJ)
     } else if (gBoard[cellI][cellJ].minesAroundCount > 0) {
         elCell.innerHTML = `${gBoard[cellI][cellJ].minesAroundCount}`
         gBoard[cellI][cellJ].isShown = true;
         gGame.shownCount++
-        console.log(gGame.shownCount);
-    } else { //Empty cell
+        console.log('occupied cell clicked:', gGame.shownCount);
+    } else if (gBoard[cellI][cellJ].minesAroundCount === 0) {//Empty cell
         elCell.style.backgroundColor = "lightblue";
         gBoard[cellI][cellJ].isShown = true;
         gGame.shownCount++
-        console.log(gGame.shownCount);
+        console.log('empty cell clicked:', gGame.shownCount);
         expandShown(gBoard, cellI, cellJ);
 
     }
@@ -149,19 +149,22 @@ function cellClicked(elCell, cellI, cellJ) {
 
 function expandShown(mat, cellI, cellJ) {
     console.log('Expanding...');
+    // debugger
     for (var i = cellI - 1; i <= cellI + 1; i++) {
         if (i < 0 || i >= mat.length) continue; // Solves case of cells placed in the edges.
         for (var j = cellJ - 1; j <= cellJ + 1; j++) {
             if (j < 0 || j >= mat[i].length) continue; // Edges.
             if (i === cellI && j === cellJ) continue; //Skips the cell itself.
-            // console.log(mat[i][j]);
+            var currCell = mat[i][j];
+            if (currCell.isShown) continue
+            console.log(`current cell pos: ${i},${j}`);
             if (mat[i][j].minesAroundCount === 0) {
                 //update model
                 mat[i][j].isShown = true;
                 gGame.shownCount++
                 console.log(gGame.shownCount);
                 //render board
-                document.querySelector(`.cell-${i}-${j}`).style.backgroundColor = "lightblue";
+                document.querySelector(`.cell-${i}-${j}`).style.backgroundColor = "blue";
             } else {
                 //update model
                 mat[i][j].isShown = true;

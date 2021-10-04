@@ -11,17 +11,27 @@
 
 <body onload="init()">
     <h1>Mine Sweeper</h1>
-    <div class="game-data">
-        <div class="timer">Timer:<span></span></div>
-        <button class="game-status" onclick="restartGame()"> </button>
 
-        <div class="count">Counter:<span></span></div>
+    <div class="difficulty-setting">
+        <input type="radio" id="easy" name="difficulty" value="16" onclick="setDifficulty(value)">
+        <label for="easy">Easy (16)</label>
+        <input type="radio" id="medium" name="difficulty" value="25" onclick="setDifficulty(value)">
+        <label for=" medium">Medium (25)</label>
+        <input type="radio" id="hard" name="difficulty" value="36" onclick="setDifficulty(value)">
+        <label for=" hard">hard (36)</label>
     </div>
-    <table border="1">
-        <tbody class="board"></tbody>
+    <div class="game-interface">
+        <div class="game-data">
+            <div class="timer">Timer:<span></span></div>
+            <button class="game-status" onclick="restartGame()"> </button>
 
-    </table>
+            <div class="count">Counter:<span></span></div>
+        </div>
+        <table border="1">
+            <tbody class="board"></tbody>
 
+        </table>
+    </div>
     <script src="https://kit.fontawesome.com/6a4b98cb80.js" crossorigin="anonymous"></script>
     <script src="js/utils.js"></script>
     <script src="js/main.js"></script>
