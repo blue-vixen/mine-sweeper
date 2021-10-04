@@ -7,9 +7,11 @@ body {background-color: black;
 }
 
 footer {
-    position: absolute;
+    width: 100%;
+    /* position: absolute; */
     bottom: 0;
     margin: 10px;
+    text-align: center;
 }
 
 table {
@@ -21,7 +23,7 @@ button {
     height: 45px;
     font-size: 20px;
     text-align: center;
-    margin:10px;
+    margin-bottom:10px;
 }
 
 .cell {
@@ -34,9 +36,10 @@ button {
 .cell img {width:auto; height:30px}
 
 .game-data {
-    width: 200px;
+    /* width: 200px; */
     display: flex;
     justify-content: space-evenly;
+    justify-self: center;
 }
 
 .difficulty-setting {

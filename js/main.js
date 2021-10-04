@@ -21,18 +21,36 @@ var gGame = {
 }
 
 
-
 function init() {
     gGame.shownCount = 0;
     gGame.markedCount = 0;
     gPositions = [];
-    gBoard = buildBoard(4);
+    gBoard = buildBoard();
     gVictory = false;
     renderBoard(gBoard);
     document.querySelector(".game-status").innerText = START_IMG;
     gGame.isOn = true;
 
 
+}
+
+function setLevel(value) {
+    console.log('level clicked:', value);
+    switch (value) {
+        case 'beginner':
+            gLevel.size = 4;
+            gLevel.mines = 2;
+            break;
+        case 'medium':
+            gLevel.size = 8;
+            gLevel.mines = 12;
+            break;
+        case 'expert':
+            gLevel.size = 12;
+            gLevel.mines = 30;
+            break;
+    }
+    init();
 }
 
 function restartGame() {
