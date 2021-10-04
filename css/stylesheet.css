@@ -1,8 +1,14 @@
 body {background-color: black; color:white}
 
-.cell {width:40px; height:40px;text-align: center}
-.cell img {width:auto; height:30px}
 
-.hidden {
-    display-content:none;
+table {
+    border-color: white;
 }
+
+.cell {
+    width:40px;
+     height:40px;
+     text-align: center;
+    background-color: rgb(112, 111, 111);
+}
+.cell img {width:auto; height:30px}

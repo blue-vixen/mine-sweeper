@@ -76,7 +76,7 @@ function renderBoard(board) {
             // cellClass += (currCell.isShown) ? ' shown ' : 'hidden';
             cellClass += (currCell.isMine ? ' mine ' : '');
 
-            strHTML += `\t<td class ="cell ${cellClass}" title="${i}-${j}" data-i="${i}" data-j="${j}" onclick="cellClicked(this, ${i},${j}) onclick="cellMarked(this)">\n`
+            strHTML += `\t<td class ="cell ${cellClass}" title="${i}-${j}" data-i="${i}" data-j="${j}" onclick="cellClicked(this, ${i},${j})" onclick="cellMarked(this)">\n`
             // strHTML += (currCell.isMine) ? MINE_IMG : '';
             // if (currCell.isMine) strHTML += MINE_IMG
             // else if (currCell.minesAroundCount > 0) strHTML += `${currCell.minesAroundCount}`;
@@ -105,24 +105,26 @@ function setMinesNegsCount(cellI, cellJ, mat) {
     return neighborsCount;
 }
 
-function cellClicked(currCell, cellI, cellJ) {
+function cellClicked(elCell, cellI, cellJ) {
     var strHTML = '';
     if (gBoard[cellI][cellJ].isMine) strHTML += MINE_IMG
-    else if (gBoard[cellI][cellJ].minesAroundCount > 0) strHTML += `${gBoard[cellI][cellJ].minesAroundCount}`;
-    console.log(strHTML);
-    currCell.innerHTML = strHTML;
-
+    else if (gBoard[cellI][cellJ].minesAroundCount > 0) strHTML += `${gBoard[cellI][cellJ].minesAroundCount}`
+    else document.querySelector(`.cell-${cellI}-${cellJ}`).style.backgroundColor = "lightblue";
+    // console.log(strHTML);
+    elCell.innerHTML = strHTML;
+    gBoard[cellI][cellJ].isShown = true;
+    console.log(gBoard[cellI][cellJ].isShown);
 }
 
-// function cellMakred(e) {
-//     console.log('disabled!')
-//     // var currCell = e.path;
-//     console.log(e);
+function cellMarked(elCell) {
+    gBoard[elCell.dataset.i][elCell.dataset.j].isMarked = true;
+    elCell.innerHTML = FLAG_IMG;
+}
 
+window.addEventListener('contextmenu', function (e) {
+    if (e.target.nodeName === 'TD') {
+        e.preventDefault();
+        cellMarked(e.target)
+    }
 
-// }
-
-// window.addEventListener('contextmenu', function (e) {
-//     cellMakred(e);
-//     e.preventDefault();
-// }, false);
+}, false);
