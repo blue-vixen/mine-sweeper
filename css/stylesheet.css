@@ -1,8 +1,21 @@
 body {background-color: black; color:white}
 
+footer {
+    position: absolute;
+    bottom: 0;
+    margin: 10px;
+}
 
 table {
     border-color: white;
+}
+
+button {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+    text-align: center;
+    margin:10px;
 }
 
 .cell {
@@ -11,4 +24,11 @@ table {
      text-align: center;
     background-color: rgb(112, 111, 111);
 }
+
 .cell img {width:auto; height:30px}
+
+.game-data {
+    width: 200px;
+    display: flex;
+    justify-content: space-evenly;
+}
