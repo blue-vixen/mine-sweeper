@@ -180,6 +180,7 @@ function updateBoard() {
 
     renderBoard(gBoard);
     // console.log('board updated and rendered');
+    console.log(gBoard);
 }
 
 function renderBoard(board) {
@@ -291,12 +292,12 @@ function cellMarked(elCell) {
         // console.log(gGame.markedCount);
         // debugger
     } else {
-        var strHTML = ''
+        var strHTML = '<span style="visibilty:hidden">'
         gBoard[elCell.dataset.i][elCell.dataset.j].isMarked = false;
         if (gBoard[elCell.dataset.i][elCell.dataset.j].isMine) strHTML += MINE_IMG;
         else if (gBoard[elCell.dataset.i][elCell.dataset.j] > 0) strHTML += gBoard[cellI][cellJ].minesAroundCount;
         else strHTML += '';
-        elCellSpan.innerHTML = strHTML;
+        elCellSpan.innerHTML = strHTML + '</span>';
         gGame.markedCount--
         gGame.minesLeft++
         // console.log(gGame.markedCount);
@@ -322,6 +323,8 @@ function mineClicked(cellI, cellJ) {
         document.querySelector(`.life${gGame.lives}`).style.color = 'lightgray';
         document.querySelector(`.life${gGame.lives}`).style.textShadow = 'none';
         gGame.lives--
+        gGame.minesLeft--
+        document.querySelector(".count span").innerText = gGame.minesLeft;
     } else {
         revealAllMines();
         gameOver();
