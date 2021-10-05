@@ -15,7 +15,6 @@
 
 <body onload="init()">
     <h1>Mine Sweeper</h1>
-
     <div class="difficulty-setting">
         <input type="radio" id="beginner" name="level" value="beginner" onclick="setLevel(value)">
         <label for="beginner">Beginner</label>
@@ -30,9 +29,18 @@
             <button class="game-status" onclick="restartGame()"> </button>
             <div class="count">Mines:<br><span></span></div>
         </div>
-        <div class="game-data lives"><span class="life life1">❤</span><span class="life life2">❤</span><span
-                class="life life3">❤</span>
+        <div class="game-data">
+            <div class="hints">
+                <span class="hint hint1" onclick="hintClicked(this,1)">💡</span><span class="hint hint2"
+                    onclick="hintClicked(this,2)">💡</span><span class="hint hint3"
+                    onclick="hintClicked(this,3)">💡</span>
+            </div>
+            <div class="lives"><span class="life life1">❤</span><span class="life life2">❤</span><span
+                    class="life life3">❤</span>
+            </div>
         </div>
+
+
         <table border="1">
             <tbody class="board"></tbody>
 

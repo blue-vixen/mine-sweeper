@@ -20,13 +20,14 @@ footer {
 }
 
 footer:hover {
-    font-size: 16px;
+    font-size: 14px;
     text-shadow: 0 0 5px #f3eded, 0 0 15px #f700ff;
 }
 
 table {
     border-color: white;
 }
+
 
 
 button {
@@ -67,16 +68,24 @@ h1 {
     justify-content: space-evenly;
     justify-self: center;
 }
-.lives {
+.lives, .hints {
     font-size:25px;
     display:flex;
     align-items: center;
     margin-bottom: 5px;
     justify-content: center;
-    /* text-shadow: 0 0 5px #f3eded, 0 0 15px #f700ff; */
 }
 
-.life{
+.hints {
+    visibility: hidden;
+}
+
+
+.cell:hover,.hints:hover {
+    cursor: pointer;
+}
+
+.life {
     margin:2px;
     color:lightgray;
 }
@@ -101,6 +110,11 @@ h1 {
     /* background-color: rgb(173, 172, 172); */
 }
 
-.cell:not(.visible) {
+.cell:not(.visible, .hint-show) {
     background-color: rgb(112, 111, 111);
+}
+
+
+.hint-show {
+    background-color: rgb(215, 231, 126);
 }
