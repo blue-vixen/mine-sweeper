@@ -10,12 +10,18 @@ body {background-color: black;
 }
 
 footer {
-    width: 100%;
-    /* position: absolute; */
-    bottom: 0;
-    margin: 10px;
-    text-align: center;
+    font-size: 10px;
+    width: 20%;
+    position: fixed;
+    bottom:0;
+    text-align: left;
+    margin: 10px;   
     font-family: 'Indie Flower',cursive;
+}
+
+footer:hover {
+    font-size: 16px;
+    text-shadow: 0 0 5px #f3eded, 0 0 15px #f700ff;
 }
 
 table {
@@ -33,6 +39,12 @@ button {
 
 h1 {
     margin:5px;
+    text-shadow: 0 0 5px #f3eded, 0 0 15px #f700ff;
+}
+
+
+.scoreboard h1 {
+    font-size: 25px;
 }
 
 .timer{
@@ -56,15 +68,17 @@ h1 {
     justify-self: center;
 }
 .lives {
-    font-size:20px;
+    font-size:25px;
     display:flex;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     justify-content: center;
+    /* text-shadow: 0 0 5px #f3eded, 0 0 15px #f700ff; */
 }
 
 .life{
     margin:2px;
+    color:lightgray;
 }
 
 .difficulty-setting {
@@ -82,7 +96,9 @@ h1 {
 }
 
 .visible {
-    background-color: rgb(173, 172, 172);
+    background: rgb(238,174,202);
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(107,119,133,1) 100%);
+    /* background-color: rgb(173, 172, 172); */
 }
 
 .cell:not(.visible) {

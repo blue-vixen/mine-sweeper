@@ -8,12 +8,14 @@ const WIN_IMG = '😎';
 const LIFE_IMG = '❤'
 
 var gBoard;
+var gLocalStorage;
 var gInterval;
 var gPositions = [];
 var gVictory = false;
 var gLevel = {
     size: 4,
-    mines: 2
+    mines: 2,
+    name: 'beginner'
 }
 var gGame = {
     isOn: false,
@@ -24,7 +26,7 @@ var gGame = {
     minesLeft: gLevel.mines
 }
 
-
+console.log(localStorage.beginner, localStorage.medium, localStorage.expert)
 
 function init() {
     gGame.minesLeft = gLevel.mines;
@@ -40,32 +42,46 @@ function init() {
     document.querySelector(".count span").innerText = gGame.minesLeft;
     for (var i = 0; i < gGame.Lives; i++) {
         document.querySelector(`.life${i + 1}`).style.color = "red";
+        document.querySelector(`.life${i + 1}`).style.textShadow = "0 0 5px #f3eded, 0 0 15px #f700ff";
     }
+
+    document.querySelector(`.beginner span`).innerHTML = localStorage.getItem('beginner');
+    document.querySelector(`.medium span`).innerHTML = localStorage.getItem('medium');
+    document.querySelector(`.expert span`).innerHTML = localStorage.getItem('expert');
+
 
 
 
 }
 
 function setLevel(value) {
+    gLevel.name = value;
     // console.log('level clicked:', value);
     restartGame();
     switch (value) {
         case 'beginner':
             gLevel.size = 4;
             gLevel.mines = 2;
+
             break;
         case 'medium':
             gLevel.size = 8;
             gLevel.mines = 12;
+
             break;
         case 'expert':
             gLevel.size = 12;
             gLevel.mines = 30;
+
             break;
     }
     init();
 }
 
+
+function hintClicked() {
+
+}
 function restartGame() {
     console.log('Restarting');
     stopTimer()
@@ -219,7 +235,7 @@ function expandShown(mat, cellI, cellJ) {
             if (j < 0 || j >= mat[i].length) continue; // Edges.
             if (i === cellI && j === cellJ) continue; //Skips the cell itself.
             var currCell = mat[i][j];
-            if (currCell.isShown) continue
+            if (currCell.isShown || currCell.isMarked) continue
             // console.log(`current cell pos: ${i},${j}`);
             //update model
             mat[i][j].isShown = true;
@@ -268,7 +284,8 @@ function mineClicked(cellI, cellJ) {
     if (gBoard[cellI][cellJ].isShown) return;
     if (gGame.Lives > 0) {
         // console.log('OOOPS!!!');
-        document.querySelector(`.life${gGame.Lives}`).style.color = "white";
+        document.querySelector(`.life${gGame.Lives}`).style.color = 'lightgray';
+        document.querySelector(`.life${gGame.Lives}`).style.textShadow = 'none';
         gGame.Lives--
     } else {
         revealAllMines();
@@ -283,6 +300,30 @@ function checkGameOver() {
     if (gGame.markedCount === gLevel.mines && gGame.shownCount === Math.pow(gLevel.size, 2) - gLevel.mines) {
         gVictory = true;
         gameOver();
+        console.log(gGame.secsPassed);
+        debugger
+        if (gLocalStorage) {
+            switch (gLevel.name) {
+                case 'beginner':
+                    if (!localStorage.beginner) localStorage.beginner = gGame.secsPassed
+                    else if (gGame.secsPassed < localStorage.beginner) localStorage.beginner = gGame.secsPassed;
+                    console.log(localStorage.beginner)
+                    break;
+                case 'medium':
+                    if (!localStorage.medium) localStorage.medium = gGame.secsPassed
+                    else if (gGame.secsPassed < localStorage.medium) localStorage.medium = gGame.secsPassed;
+                    console.log(localStorage.medium)
+                    break;
+                case 'expert':
+                    if (!localStorage.expert) localStorage.expert = gGame.secsPassed
+                    else if (gGame.secsPassed < localStorage.expert) localStorage.expert = gGame.secsPassed;
+                    console.log(localStorage.expert)
+                    break;
+            }
+            document.querySelector(`.${gLevel.name} span`).innerHTML = localStorage.getItem(`${gLevel.name}`);
+            console.log(localStorage.beginner)
+        }
+
     }
 }
 
@@ -302,7 +343,7 @@ function gameOver() {
 function revealAllMines() {
     for (var i = 0; i < gBoard.length; i++) {
         for (var j = 0; j < gBoard[i].length; j++) {
-            if (gBoard[i][j].isMine && !gBoard[i][j].isMarked) {
+            if (gBoard[i][j].isMine) {
                 gBoard[i][j].isShown = true;
                 document.querySelector(`.cell-${i}-${j}`).innerHTML = MINE_IMG;
 
@@ -334,3 +375,11 @@ function stopTimer() {
     clearInterval(gInterval);
 
 }
+
+if (typeof (Storage) !== "undefined") {
+    gLocalStorage = true;
+
+} else {
+    gLocalStorage = false;
+}
+
