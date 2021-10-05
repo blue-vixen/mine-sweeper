@@ -242,13 +242,18 @@ function cellClicked(cellI, cellJ) {
     elCell.classList.add('visible');
     // console.log(elCell);
     elCellSpan.style.visibility = 'visible';
-    gGame.shownCount++
+
     if (gBoard[cellI][cellJ].isMine) {
         mineClicked(cellI, cellJ);
     } else if (gBoard[cellI][cellJ].minesAroundCount === 0) {
+        // gGame.shownCount++
         expandShown(gBoard, cellI, cellJ)
+        gBoard[cellI][cellJ].isShown = true;
+    } else {
+        // gGame.shownCount++
+        gBoard[cellI][cellJ].isShown = true;
     }
-    gBoard[cellI][cellJ].isShown = true;
+
     checkGameOver();
 }
 
@@ -265,14 +270,16 @@ function expandShown(mat, cellI, cellJ) {
             // console.log(`current cell pos: ${i},${j}`);
             //update model
             mat[i][j].isShown = true;
-            gGame.shownCount++
+            // gGame.shownCount++
+            // debugger
+            // var shownCountCheck = gGame.shownCount;
             // console.log(gGame.shownCount);
             //render cell
             document.querySelector(`.cell-${i}-${j} span`).style.visibility = 'visible';
             document.querySelector(`.cell-${i}-${j}`).classList.add('visible');
 
 
-            if (gBoard[i][j].minesAroundCount === 0) expandShown(gBoard, i, j);
+            if (gBoard[i][j].minesAroundCount === 0) expandShown(gBoard, i, j); //Recursion
         }
     }
     // console.log('Expanded!');
@@ -288,7 +295,7 @@ function cellMarked(elCell) {
         elCellSpan.innerText = FLAG_IMG
         elCellSpan.style.visibility = 'visible';
         gGame.minesLeft--
-        gGame.markedCount++
+        // gGame.markedCount++
         // console.log(gGame.markedCount);
         // debugger
     } else {
@@ -298,7 +305,7 @@ function cellMarked(elCell) {
         else if (gBoard[elCell.dataset.i][elCell.dataset.j] > 0) strHTML += gBoard[cellI][cellJ].minesAroundCount;
         else strHTML += '';
         elCellSpan.innerHTML = strHTML + '</span>';
-        gGame.markedCount--
+        // gGame.markedCount--
         gGame.minesLeft++
         // console.log(gGame.markedCount);
     }
@@ -307,7 +314,7 @@ function cellMarked(elCell) {
 }
 
 window.addEventListener('contextmenu', function (e) {
-    console.log(e.target)
+
     if (e.target.nodeName === 'TD' || e.target.nodeName === 'SPAN') {
         e.preventDefault();
         cellMarked(e.target)
@@ -324,7 +331,10 @@ function mineClicked(cellI, cellJ) {
         document.querySelector(`.life${gGame.lives}`).style.textShadow = 'none';
         gGame.lives--
         gGame.minesLeft--
+        // gGame.markedCount++
+        gBoard[cellI][cellJ].isMarked = true;
         document.querySelector(".count span").innerText = gGame.minesLeft;
+        checkGameOver();
     } else {
         revealAllMines();
         gameOver();
@@ -334,32 +344,41 @@ function mineClicked(cellI, cellJ) {
 }
 
 function checkGameOver() {
-    // console.log('marked:', gGame.markedCount, 'shown:', gGame.shownCount);
+    gGame.markedCount = 0;
+    gGame.shownCount = 0;
+    for (var i = 0; i < gBoard.length; i++) {
+        for (var j = 0; j < gBoard[i].length; j++) {
+            if (gBoard[i][j].isMarked) gGame.markedCount++
+            if (gBoard[i][j].isShown) gGame.shownCount++
+        }
+    }
+
+    console.log('marked:', gGame.markedCount, 'shown:', gGame.shownCount);
     if (gGame.markedCount === gLevel.mines && gGame.shownCount === Math.pow(gLevel.size, 2) - gLevel.mines) {
         gVictory = true;
         gameOver();
-        console.log(gGame.secsPassed);
-        debugger
+        // console.log(gGame.secsPassed);
+        // debugger
         if (gLocalStorage) {
             switch (gLevel.name) {
                 case 'beginner':
                     if (!localStorage.beginner) localStorage.beginner = gGame.secsPassed
                     else if (gGame.secsPassed < localStorage.beginner) localStorage.beginner = gGame.secsPassed;
-                    console.log(localStorage.beginner)
+                    // console.log(localStorage.beginner)
                     break;
                 case 'medium':
                     if (!localStorage.medium) localStorage.medium = gGame.secsPassed
                     else if (gGame.secsPassed < localStorage.medium) localStorage.medium = gGame.secsPassed;
-                    console.log(localStorage.medium)
+                    // console.log(localStorage.medium)
                     break;
                 case 'expert':
                     if (!localStorage.expert) localStorage.expert = gGame.secsPassed
                     else if (gGame.secsPassed < localStorage.expert) localStorage.expert = gGame.secsPassed;
-                    console.log(localStorage.expert)
+                    // console.log(localStorage.expert)
                     break;
             }
             document.querySelector(`.${gLevel.name} span`).innerHTML = localStorage.getItem(`${gLevel.name}`);
-            console.log(localStorage.beginner)
+            // console.log(localStorage.beginner)
         }
 
     }
@@ -450,4 +469,3 @@ if (typeof (Storage) !== "undefined") {
 } else {
     gLocalStorage = false;
 }
-
