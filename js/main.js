@@ -271,6 +271,7 @@ function expandShown(mat, cellI, cellJ) {
             document.querySelector(`.cell-${i}-${j}`).classList.add('visible');
 
 
+            if (gBoard[i][j].minesAroundCount === 0) expandShown(gBoard, i, j);
         }
     }
     // console.log('Expanded!');
@@ -279,18 +280,23 @@ function expandShown(mat, cellI, cellJ) {
 function cellMarked(elCell) {
     if (gGame.shownCount === 0 && gGame.markedCount === 0) return;
     if (gBoard[elCell.dataset.i][elCell.dataset.j].isShown || !gGame.isOn) return;
-    var elCellSpan = document.querySelector(`.cell-${elCell.dataset.i}-${elCell.dataset.j} span`)
+    var elCellSpan = document.querySelector(`.cell-${elCell.dataset.i}-${elCell.dataset.j}`)
     // console.log(elCellSpan);
     if (!gBoard[elCell.dataset.i][elCell.dataset.j].isMarked) {
         gBoard[elCell.dataset.i][elCell.dataset.j].isMarked = true;
-        elCellSpan.innerHTML = FLAG_IMG
+        elCellSpan.innerText = FLAG_IMG
         elCellSpan.style.visibility = 'visible';
         gGame.minesLeft--
         gGame.markedCount++
         // console.log(gGame.markedCount);
+        // debugger
     } else {
+        var strHTML = ''
         gBoard[elCell.dataset.i][elCell.dataset.j].isMarked = false;
-        elCellSpan.innerHTML = '';
+        if (gBoard[elCell.dataset.i][elCell.dataset.j].isMine) strHTML += MINE_IMG;
+        else if (gBoard[elCell.dataset.i][elCell.dataset.j] > 0) strHTML += gBoard[cellI][cellJ].minesAroundCount;
+        else strHTML += '';
+        elCellSpan.innerHTML = strHTML;
         gGame.markedCount--
         gGame.minesLeft++
         // console.log(gGame.markedCount);
@@ -300,7 +306,8 @@ function cellMarked(elCell) {
 }
 
 window.addEventListener('contextmenu', function (e) {
-    if (e.target.nodeName === 'TD') {
+    console.log(e.target)
+    if (e.target.nodeName === 'TD' || e.target.nodeName === 'SPAN') {
         e.preventDefault();
         cellMarked(e.target)
     }

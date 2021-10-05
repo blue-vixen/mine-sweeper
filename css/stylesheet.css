@@ -81,9 +81,9 @@ h1 {
 }
 
 
-.cell:hover,.hints:hover {
+/* .cell:hover,.hints:hover {
     cursor: pointer;
-}
+} */
 
 .life {
     margin:2px;
