@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/stylesheet.css">
     <title>Mine Sweeper</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
 </head>
 
 <body onload="init()">
@@ -22,10 +26,12 @@
     </div>
     <div class="game-interface">
         <div class="game-data">
-            <div class="timer">Timer:<span></span></div>
+            <div class="timer">Timer:<br></r><span>0</span></div>
             <button class="game-status" onclick="restartGame()"> </button>
-
-            <div class="count">Counter:<span></span></div>
+            <div class="count">Mines:<br><span></span></div>
+        </div>
+        <div class="game-data lives"><span class="life life1">❤</span><span class="life life2">❤</span><span
+                class="life life3">❤</span>
         </div>
         <table border="1">
             <tbody class="board"></tbody>

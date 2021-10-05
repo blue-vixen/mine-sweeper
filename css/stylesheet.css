@@ -1,9 +1,12 @@
+
+
 body {background-color: black; 
     color:white; 
     text-align: center;
     margin:auto;
     display:flex;
     flex-direction: column;
+    font-family: 'Orbitron', sans-serif;
 }
 
 footer {
@@ -12,11 +15,13 @@ footer {
     bottom: 0;
     margin: 10px;
     text-align: center;
+    font-family: 'Indie Flower',cursive;
 }
 
 table {
     border-color: white;
 }
+
 
 button {
     width: 45px;
@@ -27,14 +32,20 @@ button {
 }
 
 h1 {
-    margin:10px;
+    margin:5px;
 }
+
+.timer{
+ font-family: 'Orbitron', sans-serif;
+}
+    
 .cell {
     width:40px;
      height:40px;
      text-align: center;
-    background-color: rgb(112, 111, 111);
+     color:black;
 }
+
 
 .cell img {width:auto; height:30px}
 
@@ -44,6 +55,17 @@ h1 {
     justify-content: space-evenly;
     justify-self: center;
 }
+.lives {
+    font-size:20px;
+    display:flex;
+    align-items: center;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+.life{
+    margin:2px;
+}
 
 .difficulty-setting {
     padding: 10px;
@@ -51,4 +73,18 @@ h1 {
 
 .game-interface {
     margin: auto;
+}
+
+
+.cell span {
+    visibility: hidden;
+
+}
+
+.visible {
+    background-color: rgb(173, 172, 172);
+}
+
+.cell:not(.visible) {
+    background-color: rgb(112, 111, 111);
 }
