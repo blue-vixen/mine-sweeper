@@ -26,6 +26,8 @@ var gGame = {
     minesLeft: gLevel.mines
 }
 
+var gHintOn = false;
+
 console.log(localStorage.beginner, localStorage.medium, localStorage.expert)
 
 function init() {
@@ -79,7 +81,7 @@ function setLevel(value) {
 }
 
 
-function hintClicked() {
+function showHint() {
 
 }
 function restartGame() {
@@ -236,7 +238,7 @@ function expandShown(mat, cellI, cellJ) {
             if (i === cellI && j === cellJ) continue; //Skips the cell itself.
             var currCell = mat[i][j];
             if (currCell.isShown || currCell.isMarked) continue
-            // console.log(`current cell pos: ${i},${j}`);
+            console.log(`current cell pos: ${i},${j}`);
             //update model
             mat[i][j].isShown = true;
             gGame.shownCount++
@@ -254,15 +256,18 @@ function expandShown(mat, cellI, cellJ) {
 function cellMarked(elCell) {
     if (gGame.shownCount === 0 && gGame.markedCount === 0) return;
     if (gBoard[elCell.dataset.i][elCell.dataset.j].isShown || !gGame.isOn) return;
+    var elCellSpan = document.querySelector(`.cell-${elCell.dataset.i}-${elCell.dataset.j} span`)
+    // console.log(elCellSpan);
     if (!gBoard[elCell.dataset.i][elCell.dataset.j].isMarked) {
         gBoard[elCell.dataset.i][elCell.dataset.j].isMarked = true;
-        elCell.innerHTML = FLAG_IMG;
+        elCellSpan.innerHTML = FLAG_IMG
+        elCellSpan.style.visibility = 'visible';
         gGame.minesLeft--
         gGame.markedCount++
         // console.log(gGame.markedCount);
     } else {
         gBoard[elCell.dataset.i][elCell.dataset.j].isMarked = false;
-        elCell.innerHTML = '';
+        elCellSpan.innerHTML = '';
         gGame.markedCount--
         gGame.minesLeft++
         // console.log(gGame.markedCount);
@@ -344,7 +349,7 @@ function revealAllMines() {
     for (var i = 0; i < gBoard.length; i++) {
         for (var j = 0; j < gBoard[i].length; j++) {
             if (gBoard[i][j].isMine) {
-                gBoard[i][j].isShown = true;
+                // gBoard[i][j].isShown = true;
                 document.querySelector(`.cell-${i}-${j}`).innerHTML = MINE_IMG;
 
             }
