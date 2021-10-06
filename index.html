@@ -14,7 +14,8 @@
 </head>
 
 <body onload="init()">
-    <h1>Mine Sweeper</h1>
+    <h1 class="header">Mine Sweeper</h1>
+
     <div class="difficulty-setting">
         <input type="radio" id="beginner" name="level" value="beginner" onclick="setLevel(value)">
         <label for="beginner">Beginner</label>
@@ -39,20 +40,34 @@
                     class="life life3">❤</span>
             </div>
         </div>
+        <div class="game">
+            <div class="btn-container">
+                <button class="safe-btn btn-off" onclick="safeClick()">Safe<br>Click<br><span>0 Left</span></button>
+                <button class="btn-off">Manual<br>Mode</button>
 
+            </div>
+            <table border="1">
+                <tbody class="board"></tbody>
 
-        <table border="1">
-            <tbody class="board"></tbody>
+            </table>
+            <div class="btn-container">
+                <button class="btn-off" onclick="undo()">Undo</button>
+                <button class="" onclick="sevenBoomClicked()">7 BOOM!</button>
 
-        </table>
+            </div>
+        </div>
+
     </div>
     <div class="scoreboard">
         <h1>Fastest times:</h1>
-        <p class="beginner">Beginner: <span></span></p>
-        <p class="medium">Medium: <span></span></p>
-        <p class="expert">Expert: <span></span></p>
+        <div class="scores">
+            <p class="beginner">Beginner<br><span></span></p>
+            <p class="medium">Medium<br><span></span></p>
+            <p class="expert">Expert<br><span></span></p>
+        </div>
 
     </div>
+
     <script src="https://kit.fontawesome.com/6a4b98cb80.js" crossorigin="anonymous"></script>
     <script src="js/utils.js"></script>
     <script src="js/main.js"></script>
